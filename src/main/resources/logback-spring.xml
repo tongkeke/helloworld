@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true" scanPeriod="30 seconds">
+    <property name="project_Name" value="helloworld" />
+    <property name="logDir" value="${root.path}/logs" />
+    <property name="archivesDirectory" value="${logDir}/archives/" />
+    <property name="outFormat" value="%d{HH:mm:ss.SSS} [%-5level] [%thread] %msg %caller{1}"></property>
+
+    <contextName>${project_Name}</contextName>
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志文件输出的文件名-->
+        <file>${logDir}/${project_Name}-out.log</file>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy"> <!-- rollover daily -->
+            <!--日志文件压缩输出的文件名-->
+            <fileNamePattern>${archivesDirectory}/${project_Name}-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+            <!--日志文件最大的大小-->
+            <maxFileSize>100MB</maxFileSize>
+            <!--日志文件保留天数-->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${outFormat}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+            <destination>vm:22511</destination>
+            <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender> -->
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${outFormat}</pattern>
+        </encoder>
+    </appender>
+
+    <!--logger 有两种级别，一种是 root，一种是普通的 logger，logger 是用来设置某一个包或者具体的某一个类的日志打印机级别，以及制定的 appender。 -->
+    <!--每个 logger 都有对应的父级关系，它通过包名来决定父级关系，root 是最高级的父元素。-->
+    <!--<logger name="druid.sql" level="error" additivity="false">
+        <appender-ref ref="ROLLING" />
+        <appender-ref ref="STDOUT" />
+    </logger>-->
+    <logger name="com.it.springboot" level="debug" additivity="false">
+        <appender-ref ref="ROLLING" />
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <!--root 也是 logger 元素，但它是根 logger。只有一个 level 属性-->
+    <root level="debug">
+        <!-- <appender-ref ref="stash" /> -->
+        <appender-ref ref="ROLLING" />
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

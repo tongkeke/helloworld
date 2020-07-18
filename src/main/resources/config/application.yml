@@ -1,0 +1,89 @@
+spring:
+  application:
+    name: helloworld
+    version: 1.0.0
+  datasource:
+    username: blockchain
+    password: blockchain123
+    url: jdbc:mysql://192.168.19.128/blockchain
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 8
+      maximum-pool-size: 100
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  #data:
+    #mongodb:
+      #uri: mongodb://mongouser:mongouser123@192.168.19.128:27017/cache_database
+
+  #Message Queue
+  rabbitmq:
+    host: 192.168.19.128
+    port: 5672
+    username: loc
+    password: loc
+    template:
+      retry: #To retry operations, you can enable retries on the AmqpTemplate (for example, in the event that the broker connection is lost):
+        enabled: true
+        initial-interval: 2s
+
+server:
+    port: 9092
+    tomcat:
+      uri-encoding: UTF-8
+#log
+logging:
+  config: classpath:logback-spring.xml
+
+# MyBatis
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.it.springboot
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mybatis/mapper/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml
+
+person:
+    name: hello
+    age: 18
+    boss: true
+    birth: 2020/5/6
+    #maps: {k1:v1,k2:v2}
+    lists:
+        - 李四
+        - zhouliu
+    dog:
+        name: dog_name
+        age: 5
+
+hello:
+  mongo:
+    datasource:
+      database: mongo_database
+      username: "mongouser"
+      password: "mongouser123"
+      address: "192.168.19.128:27017"
+      #authenticationDatabase: #[设置你的认证数据库，如果有的话]
+      # 连接池配置
+      clientName: ${spring.application.name} # 客户端的标识，用于定位请求来源等
+      connectionTimeoutMs: 10000     # TCP连接超时，毫秒
+      readTimeoutMs: 15000       # TCP读取超时，毫秒
+      poolMaxWaitTimeMs: 3000        #当连接池无可用连接时客户端阻塞等待的时长，单位毫秒
+      connectionMaxIdleTimeMs: 60000   #TCP连接闲置时间，单位毫秒
+      connectionMaxLifeTimeMs: 120000    #TCP连接最多可以使用多久，单位毫秒
+      heartbeatFrequencyMs: 20000      #心跳检测发送频率，单位毫秒
+      minHeartbeatFrequencyMs: 8000    #最小的心跳检测发送频率，单位毫秒
+      heartbeatConnectionTimeoutMs: 10000  #心跳检测TCP连接超时，单位毫秒
+      heartbeatReadTimeoutMs: 15000    #心跳检测TCP连接读取超时，单位毫秒
+      connectionsPerHost: 20       # 每个host的TCP连接数
+      minConnectionsPerHost: 5     #每个host的最小TCP连接数
+      #计算允许多少个线程阻塞等待可用TCP连接时的乘数，算法：threadsAllowedToBlockForConnectionMultiplier*connectionsPerHost，当前配置允许10*20个线程阻塞
+      threadsAllowedToBlockForConnectionMultiplier: 10
+  #mongocache:
+    #datasource:

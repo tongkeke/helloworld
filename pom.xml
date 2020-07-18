@@ -135,14 +135,14 @@
     </dependencies>
 
     <build>
-        <plugins>
+        <!--<plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>1.5.4.RELEASE</version>
                 <configuration>
                     <mainClass>com.it.springboot.Springboot01HelloworldQuickApplication</mainClass>
-                    <!--<skip>true</skip>-->
+                    &lt;!&ndash;<skip>true</skip>&ndash;&gt;
                 </configuration>
                 <executions>
                     <execution>
@@ -155,7 +155,7 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
+        </plugins>-->
     </build>
 
 </project>
